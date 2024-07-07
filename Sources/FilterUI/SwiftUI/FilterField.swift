@@ -1,5 +1,4 @@
 import SwiftUI
-import FilterUI
 
 // TODO: refactor API for filter buttons
 // TODO: remove filter field style?
