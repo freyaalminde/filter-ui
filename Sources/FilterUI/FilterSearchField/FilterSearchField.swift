@@ -99,13 +99,13 @@ open class ProgressIndicator: NSProgressIndicator {
       NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification, object: nil),
       NotificationCenter.default.publisher(for: NSWindow.didResignKeyNotification, object: nil)
     )
-    .sink { _ in self.needsDisplay = true }
+    .sink { [weak self] _ in self?.needsDisplay = true }
     .store(in: &subscriptions)
 
     Publishers.MergeMany(
       NotificationCenter.default.publisher(for: NSWindow.didChangeScreenProfileNotification, object: nil)
     )
-    .sink { _ in self.needsDisplay = true }
+    .sink { [weak self] _ in self?.needsDisplay = true }
     .store(in: &subscriptions)
   }
   
@@ -199,9 +199,9 @@ open class ProgressIndicator: NSProgressIndicator {
     button.setAccessibilityTitle(accessibilityDescription)
 
     button.cell?.publisher(for: \.state)
-      .sink {
-        button.contentTintColor = $0 == .on ? .controlAccentColor : nil
-        self.needsLayout = true
+      .sink { [weak self, weak button] in
+        button?.contentTintColor = $0 == .on ? .controlAccentColor : nil
+        self?.needsLayout = true
       }
       .store(in: &filterButtonSubscriptions)
 

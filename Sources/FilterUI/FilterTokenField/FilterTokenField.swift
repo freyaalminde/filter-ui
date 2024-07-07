@@ -90,7 +90,7 @@ import Combine
       NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification, object: nil),
       NotificationCenter.default.publisher(for: NSWindow.didResignKeyNotification, object: nil)
     )
-    .sink { _ in self.needsDisplay = true }
+    .sink { [weak self] _ in self?.needsDisplay = true }
     .store(in: &subscriptions)
 
     objectValueDidChange()

@@ -7,6 +7,7 @@ extension ControlSize {
     case .small: return .small
     case .mini: return .mini
     case .large: return .large
+    case .extraLarge: return .large
     @unknown default: return .regular
     }
   }
